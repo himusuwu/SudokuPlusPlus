@@ -1,4 +1,0 @@
-/Users/dawid/dev/SudokuSolver/build/CMakeFiles/SudokuSolver.dir
-/Users/dawid/dev/SudokuSolver/build/CMakeFiles/run.dir
-/Users/dawid/dev/SudokuSolver/build/CMakeFiles/edit_cache.dir
-/Users/dawid/dev/SudokuSolver/build/CMakeFiles/rebuild_cache.dir
