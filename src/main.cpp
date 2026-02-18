@@ -12,6 +12,8 @@ int main()
 
     shuffle_board(sudoku_table);
 
+    sudoku_generator(sudoku_table);
+
     //Tests
     //std::cout << random_1 << " " << random_2 << std::endl << std::endl;
 
