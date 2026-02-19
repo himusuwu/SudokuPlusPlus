@@ -9,7 +9,7 @@
 
 #include "Config.hpp"
 
-static const std::map<DifficultyLevel, DifficultyProfile> difficultyMap =
+inline const std::map<DifficultyLevel, DifficultyProfile> difficultyMap =
 {
     // { KEY,                  { MIN, MAX, SYMETRY, ATTEMTS }}
     { DifficultyLevel::EASY,    { 36,  45,  true,   20 } },

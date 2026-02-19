@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-enum class DifficultyLevel
+enum class DifficultyLevel : uint8_t
 {
     EASY,
     MEDIUM,
@@ -15,7 +15,7 @@ struct DifficultyProfile
 {
     size_t minEmpty;
     size_t maxEmpty;
-    bool symetric;
+    bool symmetric;
     size_t solverAttempts;
 };
 

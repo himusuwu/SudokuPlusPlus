@@ -5,8 +5,6 @@ std::vector<std::vector<int>> shuffle_board(std::vector<std::vector<int>>& sudok
     size_t random_1 = (std::rand() % 8) + 1;
     size_t random_2 = (std::rand() % 8) + 1;
 
-    //std::cout << random_1 << " " << random_2 << std::endl << std::endl;
-
     if(random_1 == random_2)
     {
         if(random_1 == 1)

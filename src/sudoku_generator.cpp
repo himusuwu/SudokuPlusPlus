@@ -70,7 +70,7 @@ std::vector<std::vector<int>> sudoku_generator(std::vector<std::vector<int>>& su
         size_t backup = tmp_sudoku_table[field.row][field.col];
         size_t backup_sym{};
 
-        if(config.symetric)
+        if(config.symmetric)
         {
             tmp_sudoku_table[field.row][field.col] = 0;
 
@@ -89,7 +89,7 @@ std::vector<std::vector<int>> sudoku_generator(std::vector<std::vector<int>>& su
 
         if(check_unique(tmp_sudoku_table))
         {
-            if(config.symetric && !(field.row == 4 && field.col == 4))
+            if(config.symmetric && !(field.row == 4 && field.col == 4))
             {
                 empty_fields += 2;
             }
@@ -102,7 +102,7 @@ std::vector<std::vector<int>> sudoku_generator(std::vector<std::vector<int>>& su
         {
             tmp_sudoku_table[field.row][field.col] = backup;
 
-            if(config.symetric && !(field.row == 4 && field.col == 4))
+            if(config.symmetric && !(field.row == 4 && field.col == 4))
             {
                 tmp_sudoku_table[8 - field.row][8 - field.col] = backup_sym;
             }
