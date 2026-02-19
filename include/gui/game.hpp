@@ -4,6 +4,10 @@
 #include <raylib.h>
 #include <vector>
 
+#include "shuffle_board.hpp"
+#include "sudoku_grid.hpp"
+#include "sudoku_generator.hpp"
+
 class Game
 {
 public:
@@ -30,6 +34,8 @@ private:
     const int grid_size = 9;
     
     std::vector<std::vector<int>> sudoku_table;
+
+    Shuffler shuffler;
 };
 
 #endif

@@ -1,9 +1,5 @@
 #include "gui/game.hpp"
 
-#include "shuffle_board.hpp"
-#include "sudoku_grid.hpp"
-#include "sudoku_generator.hpp"
-
 Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
 {
     InitWindow(screenWidth, screenHeight, "Sudoku");
@@ -35,7 +31,7 @@ void Game::newGame(size_t difficulty)
 {    
     sudoku_table = sudoku_grid();
 
-    shuffle_board(sudoku_table);
+    shuffler.shuffle_board(sudoku_table);
 
     sudoku_table = sudoku_generator(sudoku_table, difficulty);
 }

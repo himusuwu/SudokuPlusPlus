@@ -1,9 +1,9 @@
 #include "shuffle_board.hpp"
 
-std::vector<std::vector<int>> shuffle_board(std::vector<std::vector<int>>& sudoku_table)
+std::vector<std::vector<int>> Shuffler::shuffle_board(std::vector<std::vector<int>>& sudoku_table)
 {
-    size_t random_1 = (std::rand() % 8) + 1;
-    size_t random_2 = (std::rand() % 8) + 1;
+    random_1 = (std::rand() % 8) + 1;
+    random_2 = (std::rand() % 8) + 1;
 
     if(random_1 == random_2)
     {
@@ -37,16 +37,16 @@ std::vector<std::vector<int>> shuffle_board(std::vector<std::vector<int>>& sudok
 
     for(size_t block = 0; block < 3; block++)
     {
-        size_t random_row_1 = block * 3 + std::rand() % 3;
-        size_t random_row_2 = block * 3 + std::rand() % 3;
+        random_row_1 = block * 3 + std::rand() % 3;
+        random_row_2 = block * 3 + std::rand() % 3;
 
         sudoku_table[random_row_1].swap(sudoku_table[random_row_2]);
     }
 
     for(size_t block = 0; block < 3; block++)
     {
-        size_t random_col_1 = block * 3 + std::rand() % 3;
-        size_t random_col_2 = block * 3 + std::rand() % 3;
+        random_col_1 = block * 3 + std::rand() % 3;
+        random_col_2 = block * 3 + std::rand() % 3;
 
         for(size_t row = 0; row < sudoku_table.size(); row++)
         {
@@ -54,7 +54,7 @@ std::vector<std::vector<int>> shuffle_board(std::vector<std::vector<int>>& sudok
         }
     }
 
-    size_t possibility = std::rand() % 2;
+    possibility = std::rand() % 2;
 
     if(possibility == 1)
     {
