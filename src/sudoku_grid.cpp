@@ -1,9 +1,9 @@
 #include "sudoku_grid.hpp"
 
-std::vector<std::vector<int>> sudoku_grid()
+std::vector<std::vector<int>> Grid::sudoku_grid()
 {
     //Solved Sudoku board
-    std::vector<std::vector<int>> sudoku_table = 
+    sudoku_table = 
     {
         {
         {5, 3, 4, 6, 7, 8, 9, 1, 2},

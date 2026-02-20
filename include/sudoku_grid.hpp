@@ -3,6 +3,13 @@
 
 #include <vector>
 
-std::vector<std::vector<int>> sudoku_grid();
+class Grid
+{
+public:
+    std::vector<std::vector<int>> sudoku_grid();
+
+private:
+    std::vector<std::vector<int>> sudoku_table;
+};
 
 #endif

@@ -1,6 +1,7 @@
 #include "sudoku_generator.hpp"
+#include "sudoku_solver.hpp"
 
-bool is_valid(std::vector<std::vector<int>>& board, size_t row, size_t col, int possible_digit)
+bool Solver::is_valid(std::vector<std::vector<int>>& board, size_t row, size_t col, int possible_digit)
 {
     for(size_t i = 0; i < 9; i++)
     {
@@ -15,15 +16,15 @@ bool is_valid(std::vector<std::vector<int>>& board, size_t row, size_t col, int 
         }
     }
 
-    size_t startRow = (row / 3) * 3;
-    size_t startCol = (col / 3) * 3;
+    startRow = (row / 3) * 3;
+    startCol = (col / 3) * 3;
 
     for(size_t blockRow = 0; blockRow < 3; blockRow++)
     {
         for(size_t blockCol = 0; blockCol < 3; blockCol++)
         {
-            size_t currentRow = startRow + blockRow;
-            size_t currentCol = startCol + blockCol;
+            currentRow = startRow + blockRow;
+            currentCol = startCol + blockCol;
 
             if(board[currentRow][currentCol] == possible_digit)
             {
@@ -35,7 +36,7 @@ bool is_valid(std::vector<std::vector<int>>& board, size_t row, size_t col, int 
     return true;
 }
 
-bool solve(std::vector<std::vector<int>>& tmp_sudoku_table)
+bool Solver::solve(std::vector<std::vector<int>>& tmp_sudoku_table)
 {
     for(size_t row = 0; row < tmp_sudoku_table.size(); row++)
     {
@@ -66,7 +67,7 @@ bool solve(std::vector<std::vector<int>>& tmp_sudoku_table)
     return true;
 }
 
-void can_be_solved_and_is_unique(std::vector<std::vector<int>>& tmp_sudoku_table, size_t& solutions)
+void Solver::can_be_solved_and_is_unique(std::vector<std::vector<int>>& tmp_sudoku_table, size_t& solutions)
 {
     for(size_t row = 0; row < tmp_sudoku_table.size(); row++)
     {
@@ -100,16 +101,14 @@ void can_be_solved_and_is_unique(std::vector<std::vector<int>>& tmp_sudoku_table
     solutions++;
 }
 
-bool check_unique(std::vector<std::vector<int>> tmp_sudoku_table)
-{
-    size_t solutions{};
-    
+bool Solver::check_unique(std::vector<std::vector<int>> tmp_sudoku_table)
+{    
     can_be_solved_and_is_unique(tmp_sudoku_table, solutions);
 
     return solutions == 1;
 }
 
-std::vector<std::vector<int>> sudoku_solver(std::vector<std::vector<int>>& tmp_sudoku_table)
+std::vector<std::vector<int>> Solver::sudoku_solver(std::vector<std::vector<int>>& tmp_sudoku_table)
 {
     solve(tmp_sudoku_table);
 

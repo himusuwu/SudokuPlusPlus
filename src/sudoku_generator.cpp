@@ -2,9 +2,9 @@
 #include "sudoku_solver.hpp"
 #include "Config.hpp"
 
-std::vector<FieldList> field_list(std::vector<std::vector<int>>& sudoku_table)
+std::vector<Generate::FieldList> Generate::field_list(std::vector<std::vector<int>>& sudoku_table)
 {
-    std::vector<FieldList> fields;
+    std::vector<Generate::FieldList> fields;
 
     for(size_t row = 0; row < sudoku_table.size(); row++)
     {
@@ -20,7 +20,7 @@ std::vector<FieldList> field_list(std::vector<std::vector<int>>& sudoku_table)
     return fields;
 }
 
-DifficultyLevel selectedLevel(size_t difficulty)
+DifficultyLevel Generate::selectedLevel(size_t difficulty)
 {
     switch(difficulty)
     {
@@ -41,19 +41,15 @@ DifficultyLevel selectedLevel(size_t difficulty)
     }
 }
 
-std::vector<std::vector<int>> sudoku_generator(std::vector<std::vector<int>>& sudoku_table, size_t difficulty)
+[[nodiscard]] std::vector<std::vector<int>> Generate::sudoku_generator(std::vector<std::vector<int>>& sudoku_table, size_t difficulty)
 {
-    std::vector<FieldList> fields = field_list(sudoku_table);
+    fields = Generate::field_list(sudoku_table);
+    
+    tmp_sudoku_table = sudoku_table;
 
-    std::vector<std::vector<int>> tmp_sudoku_table = sudoku_table;
+    const DifficultyProfile& config = Generate::difficultyMap.at(selectedLevel(difficulty));
 
-    std::vector<std::vector<int>> unsolved_sudoku;
-
-    size_t empty_fields{};
-
-    const DifficultyProfile& config = difficultyMap.at(selectedLevel(difficulty));
-
-    size_t attemptsLeft = config.solverAttempts;
+    attemptsLeft = config.solverAttempts;
 
     for(const auto& field : fields)
     {
@@ -67,8 +63,7 @@ std::vector<std::vector<int>> sudoku_generator(std::vector<std::vector<int>>& su
             continue;
         }
 
-        size_t backup = tmp_sudoku_table[field.row][field.col];
-        size_t backup_sym{};
+        backup = tmp_sudoku_table[field.row][field.col];
 
         if(config.symmetric)
         {
@@ -85,9 +80,9 @@ std::vector<std::vector<int>> sudoku_generator(std::vector<std::vector<int>>& su
             tmp_sudoku_table[field.row][field.col] = 0;
         }
 
-        size_t solutions{};
+        Solver solver;
 
-        if(check_unique(tmp_sudoku_table))
+        if(solver.check_unique(tmp_sudoku_table))
         {
             if(config.symmetric && !(field.row == 4 && field.col == 4))
             {

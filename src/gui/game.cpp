@@ -29,11 +29,15 @@ void Game::run()
 
 void Game::newGame(size_t difficulty)
 {    
-    sudoku_table = sudoku_grid();
+    Grid grid;
+
+    sudoku_table = grid.sudoku_grid();
 
     shuffler.shuffle_board(sudoku_table);
 
-    sudoku_table = sudoku_generator(sudoku_table, difficulty);
+    Generate generate;
+
+    sudoku_table = generate.sudoku_generator(sudoku_table, difficulty);
 }
 
 void Game::draw()
