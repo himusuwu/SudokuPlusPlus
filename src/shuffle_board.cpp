@@ -1,9 +1,12 @@
 #include "shuffle_board.hpp"
+#include "random_gen.hpp"
 
 std::vector<std::vector<int>> Shuffler::shuffle_board(std::vector<std::vector<int>>& sudoku_table)
 {
-    random_1 = (std::rand() % 8) + 1;
-    random_2 = (std::rand() % 8) + 1;
+    RandomGen random;
+
+    random_1 = random.random_int(1, 8);
+    random_2 = random.random_int(1, 8);
 
     if(random_1 == random_2)
     {
@@ -37,16 +40,16 @@ std::vector<std::vector<int>> Shuffler::shuffle_board(std::vector<std::vector<in
 
     for(size_t block = 0; block < 3; block++)
     {
-        random_row_1 = block * 3 + std::rand() % 3;
-        random_row_2 = block * 3 + std::rand() % 3;
+        random_row_1 = block * 3 + random.random_int(0, 2);
+        random_row_2 = block * 3 + random.random_int(0, 2);
 
         sudoku_table[random_row_1].swap(sudoku_table[random_row_2]);
     }
 
     for(size_t block = 0; block < 3; block++)
     {
-        random_col_1 = block * 3 + std::rand() % 3;
-        random_col_2 = block * 3 + std::rand() % 3;
+        random_col_1 = block * 3 + random.random_int(0, 2);
+        random_col_2 = block * 3 + random.random_int(0, 2);
 
         for(size_t row = 0; row < sudoku_table.size(); row++)
         {

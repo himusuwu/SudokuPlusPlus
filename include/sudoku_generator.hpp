@@ -6,6 +6,8 @@
 #include <ctime>
 #include <random>
 #include <map>
+#include <chrono>
+#include <algorithm>
 
 #include "Config.hpp"
 

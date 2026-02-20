@@ -1,7 +1,6 @@
 #ifndef SHUFFLE_BOARD
 #define SHUFFLE_BOARD
 
-#include <random>
 #include <chrono>
 #include <algorithm>
 #include <vector>

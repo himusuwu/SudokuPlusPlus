@@ -12,7 +12,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-set(SOURCE_FILES src/main.cpp src/shuffle_board.cpp src/sudoku_grid.cpp src/sudoku_generator.cpp src/sudoku_solver.cpp src/gui/game.cpp)
+set(SOURCE_FILES src/main.cpp src/shuffle_board.cpp src/sudoku_grid.cpp src/sudoku_generator.cpp src/sudoku_solver.cpp src/gui/game.cpp src/random_gen.cpp)
 
 include_directories(include)
 
