@@ -11,6 +11,11 @@ public:
     explicit RandomGen(unsigned int seed);
     [[nodiscard]] double random_float(double min, double max);[[nodiscard]] int random_int(int min, int max);
 
+    std::mt19937& generator()
+    {
+        return gen;
+    }
+
 private:
     std::mt19937 gen;
 

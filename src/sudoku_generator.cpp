@@ -1,10 +1,12 @@
 #include "sudoku_generator.hpp"
 #include "sudoku_solver.hpp"
 #include "Config.hpp"
+#include "random_gen.hpp"
 
 std::vector<Generate::FieldList> Generate::field_list(std::vector<std::vector<int>>& sudoku_table)
 {
     std::vector<Generate::FieldList> fields;
+    fields.reserve(sudoku_table.size() * sudoku_table[0].size());
 
     for(size_t row = 0; row < sudoku_table.size(); row++)
     {
@@ -14,8 +16,9 @@ std::vector<Generate::FieldList> Generate::field_list(std::vector<std::vector<in
         }
     }
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::shuffle(fields.begin(), fields.end(), std::default_random_engine(seed));
+    RandomGen random;
+
+    std::shuffle(fields.begin(), fields.end(), random.generator());
 
     return fields;
 }

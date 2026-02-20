@@ -25,7 +25,7 @@ private:
 
     inline static const std::map<DifficultyLevel, DifficultyProfile> difficultyMap =
     {
-        // { KEY,                  { MIN, MAX, SYMETRY, ATTEMTS }}
+        // { KEY,                  { MIN, MAX, SYMMETRY, ATTEMTS }}
         { DifficultyLevel::EASY,    { 36,  45,  true,   20 } },
         { DifficultyLevel::MEDIUM,  { 46,  51,  true,   50 } },
         { DifficultyLevel::HARD,    { 52,  56,  true,   500 } },
@@ -36,7 +36,7 @@ private:
 
     DifficultyLevel selectedLevel(size_t difficulty);
 
-    std::vector<FieldList> fields;
+    std::vector<Generate::FieldList> fields;
 
     std::vector<std::vector<int>> tmp_sudoku_table;
 

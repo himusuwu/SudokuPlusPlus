@@ -16,15 +16,15 @@ bool Solver::is_valid(std::vector<std::vector<int>>& board, size_t row, size_t c
         }
     }
 
-    startRow = (row / 3) * 3;
-    startCol = (col / 3) * 3;
+    const size_t startRow = (row / 3) * 3;
+    const size_t startCol = (col / 3) * 3;
 
     for(size_t blockRow = 0; blockRow < 3; blockRow++)
     {
         for(size_t blockCol = 0; blockCol < 3; blockCol++)
         {
-            currentRow = startRow + blockRow;
-            currentCol = startCol + blockCol;
+            size_t currentRow = startRow + blockRow;
+            size_t currentCol = startCol + blockCol;
 
             if(board[currentRow][currentCol] == possible_digit)
             {
@@ -102,7 +102,9 @@ void Solver::can_be_solved_and_is_unique(std::vector<std::vector<int>>& tmp_sudo
 }
 
 bool Solver::check_unique(std::vector<std::vector<int>> tmp_sudoku_table)
-{    
+{
+    solutions = 0;
+
     can_be_solved_and_is_unique(tmp_sudoku_table, solutions);
 
     return solutions == 1;

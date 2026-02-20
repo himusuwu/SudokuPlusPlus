@@ -8,9 +8,7 @@
 #include "gui/game.hpp"
 
 int main()
-{   
-    srand( time( nullptr ) );
-
+{
     const int screenWidth = 600;
     const int screenHeight = 800;
 
