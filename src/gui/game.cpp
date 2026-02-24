@@ -184,10 +184,12 @@ void Game::drawNumbers()
                 float textX = centerX - textSize.x / 2;
                 float textY = centerY - textSize.y / 2;
 
+                Color textColor = isLocked[row][col] ? BLACK : BLUE;
+
                 DrawText(
                     text.c_str(),
                     textX, textY,
-                    fontSize, BLACK
+                    fontSize, textColor
                 );
             }
         }
