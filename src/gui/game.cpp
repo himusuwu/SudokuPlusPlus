@@ -1,3 +1,5 @@
+#include <chrono>
+
 #include "gui/game.hpp"
 
 Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
@@ -9,7 +11,12 @@ Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
     gridWidth = cell_size * grid_size;
 
     gridStartX = (screenWidth - gridWidth) / 2;
-    gridStartY = (screenHeight - screenWidth) / 2;
+    gridStartY = ((screenHeight - screenWidth) / 2) - 100;
+
+    infoStartX = gridStartX;
+    infoStartY = gridStartY - 55;
+
+    infoSpacing = (gridStartX + 9 * cell_size) / 4;
 }
 
 Game::~Game()
@@ -117,7 +124,30 @@ void Game::draw()
 
     drawNumbers();
 
+    drawInfo();
+
     EndDrawing();
+}
+
+void Game::drawInfo()
+{
+    const char* months[] =
+    {
+        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+    };
+
+    auto now = std::chrono::system_clock::now();
+
+    auto days = std::chrono::floor<std::chrono::days>(now);
+
+    std::chrono::year_month_day ymd{days};
+
+    const char* month = months[unsigned(ymd.month()) - 1];
+
+    date = std::string("Date:") + "\n" + std::to_string(unsigned(ymd.day())) + " " + month;
+
+    DrawText(date.c_str(), infoStartX, infoStartY, 25, BLACK);
 }
 
 void Game::drawGrid()

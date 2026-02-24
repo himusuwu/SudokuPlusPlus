@@ -23,6 +23,7 @@ private:
     void drawNumbers();
     void drawSelection();
     void update();
+    void drawInfo();
 
     int screenWidth;
     int screenHeight;
@@ -44,6 +45,16 @@ private:
     size_t selectedRow;
     size_t selectedCol;
     size_t keyboardNum;
+
+    // Draw info
+    std::string date;
+    int score;
+    size_t errors;
+    int time;
+
+    int infoStartX;
+    int infoStartY;
+    int infoSpacing;
 
     Shuffler shuffler;
 };
