@@ -2,6 +2,7 @@
 #define CONFIG
 
 #include <cstddef>
+#include <cstdint>
 
 enum class DifficultyLevel : uint8_t
 {

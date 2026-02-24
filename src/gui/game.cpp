@@ -1,6 +1,9 @@
-#include <chrono>
-
 #include "gui/game.hpp"
+
+#include "sudoku_generator.hpp"
+#include "sudoku_grid.hpp"
+
+#include <chrono>
 
 Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
 {
@@ -30,7 +33,7 @@ void Game::run()
     selectedRow = -1;
     selectedCol = -1;
 
-    while(!WindowShouldClose())
+    while (!WindowShouldClose())
     {
         update();
 
@@ -40,7 +43,7 @@ void Game::run()
 
 void Game::update()
 {
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         mousePos = GetMousePosition();
 
@@ -50,11 +53,9 @@ void Game::update()
         int tmpCol = relativeX / cell_size;
         int tmpRow = relativeY / cell_size;
 
-        if(relativeX >= 0 && relativeY >= 0 &&
-            tmpRow >= 0 && tmpRow <= 8 &&
-            tmpCol >= 0 && tmpCol <= 8)
+        if (relativeX >= 0 && relativeY >= 0 && tmpRow >= 0 && tmpRow <= 8 && tmpCol >= 0 && tmpCol <= 8)
         {
-            if(!isLocked[tmpRow][tmpCol] && !isCorrect[tmpRow][tmpCol])
+            if (!isLocked[tmpRow][tmpCol] && !isCorrect[tmpRow][tmpCol])
             {
                 selectedRow = tmpRow;
                 selectedCol = tmpCol;
@@ -67,7 +68,7 @@ void Game::update()
         }
     }
 
-    if(selectedRow != -1 && selectedCol != -1)
+    if (selectedRow != -1 && selectedCol != -1)
     {
         numberCheck();
     }
@@ -77,9 +78,9 @@ void Game::numberCheck()
 {
     int pressedKey = GetKeyPressed();
 
-    if(pressedKey >= KEY_ONE && pressedKey <= KEY_NINE)
+    if (pressedKey >= KEY_ONE && pressedKey <= KEY_NINE)
     {
-        if(solved_table[selectedRow][selectedCol] == pressedKey - KEY_ONE + 1)
+        if (solved_table[selectedRow][selectedCol] == pressedKey - KEY_ONE + 1)
         {
             score += 100;
             isError[selectedRow][selectedCol] = false;
@@ -100,7 +101,7 @@ void Game::numberCheck()
             sudoku_table[selectedRow][selectedCol] = pressedKey - KEY_ONE + 1;
         }
     }
-    else if(pressedKey == KEY_BACKSPACE || pressedKey == KEY_DELETE || pressedKey == KEY_ZERO)
+    else if (pressedKey == KEY_BACKSPACE || pressedKey == KEY_DELETE || pressedKey == KEY_ZERO)
     {
         isError[selectedRow][selectedCol] = false;
 
@@ -110,18 +111,20 @@ void Game::numberCheck()
 
 void Game::drawError()
 {
-    for(size_t row = 0; row < isError.size(); row++)
+    for (size_t row = 0; row < isError.size(); row++)
     {
-        for(size_t col = 0; col < isError[row].size(); col++)
+        for (size_t col = 0; col < isError[row].size(); col++)
         {
-            if(isError[row][col])
+            if (isError[row][col])
             {
                 float x = gridStartX + col * cell_size;
                 float y = gridStartY + row * cell_size;
 
                 DrawRectangle(
-                    static_cast<int>(x), static_cast<int>(y),
-                    static_cast<int>(cell_size), static_cast<int>(cell_size),
+                    static_cast<int>(x),
+                    static_cast<int>(y),
+                    static_cast<int>(cell_size),
+                    static_cast<int>(cell_size),
                     Color{255, 80, 80, 120}
                 );
             }
@@ -130,7 +133,7 @@ void Game::drawError()
 }
 
 void Game::newGame(size_t difficulty)
-{    
+{
     Grid grid;
 
     sudoku_table = grid.sudoku_grid();
@@ -149,11 +152,11 @@ void Game::newGame(size_t difficulty)
 
     isError = std::vector<std::vector<bool>>(sudoku_table.size(), std::vector<bool>(sudoku_table[0].size()));
 
-    for(size_t row = 0; row < sudoku_table.size(); row++)
+    for (size_t row = 0; row < sudoku_table.size(); row++)
     {
-        for(size_t col = 0; col < sudoku_table[row].size(); col++)
+        for (size_t col = 0; col < sudoku_table[row].size(); col++)
         {
-            if(sudoku_table[row][col] != 0)
+            if (sudoku_table[row][col] != 0)
             {
                 isLocked[row][col] = true;
             }
@@ -185,18 +188,11 @@ void Game::draw()
     EndDrawing();
 }
 
-void Game::drawButtons()
-{
-
-}
+void Game::drawButtons() {}
 
 void Game::drawInfo()
 {
-    const char* months[] =
-    {
-        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-    };
+    const char* months[] = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
 
     auto now = std::chrono::system_clock::now();
     auto days = std::chrono::floor<std::chrono::days>(now);
@@ -217,7 +213,8 @@ void Game::drawInfo()
     int minutes = seconds / 60;
     int remainingSeconds = seconds % 60;
 
-    std::string s_time = (minutes < 10 ? "0" : "") + std::to_string(minutes) + ":" + (remainingSeconds < 10 ? "0" : "") + std::to_string(remainingSeconds);
+    std::string s_time = (minutes < 10 ? "0" : "") + std::to_string(minutes) + ":" + (remainingSeconds < 10 ? "0" : "")
+                       + std::to_string(remainingSeconds);
 
     const int font = 25;
     const int lineGap = 4;
@@ -249,7 +246,7 @@ void Game::drawInfo()
 
 void Game::drawGrid()
 {
-    for(size_t i = 0; i <= 9; i++)
+    for (size_t i = 0; i <= 9; i++)
     {
         float thickness = (i % 3 == 0) ? 3 : 1;
 
@@ -258,7 +255,8 @@ void Game::drawGrid()
         DrawLineEx(
             Vector2{x, static_cast<float>(gridStartY)},
             Vector2{x, static_cast<float>(gridStartY + gridWidth)},
-            thickness, BLACK
+            thickness,
+            BLACK
         );
 
         float y = gridStartY + i * cell_size;
@@ -266,21 +264,24 @@ void Game::drawGrid()
         DrawLineEx(
             Vector2{static_cast<float>(gridStartX), y},
             Vector2{static_cast<float>(gridStartX + gridWidth), y},
-            thickness, BLACK
+            thickness,
+            BLACK
         );
     }
 }
 
 void Game::drawSelection()
 {
-    if(selectedRow != -1 && selectedCol != -1)
+    if (selectedRow != -1 && selectedCol != -1)
     {
         float x = gridStartX + selectedCol * cell_size;
         float y = gridStartY + selectedRow * cell_size;
 
         DrawRectangle(
-            static_cast<int>(x), static_cast<int>(y),
-            static_cast<int>(cell_size), static_cast<int>(cell_size),
+            static_cast<int>(x),
+            static_cast<int>(y),
+            static_cast<int>(cell_size),
+            static_cast<int>(cell_size),
             Color{200, 200, 200, 255}
         );
     }
@@ -290,13 +291,13 @@ void Game::drawNumbers()
 {
     Font font = GetFontDefault();
 
-    for(size_t row = 0; row < sudoku_table.size(); row++)
+    for (size_t row = 0; row < sudoku_table.size(); row++)
     {
-        for(size_t col = 0; col < sudoku_table[row].size(); col++)
+        for (size_t col = 0; col < sudoku_table[row].size(); col++)
         {
             int number = sudoku_table[row][col];
 
-            if(number != 0)
+            if (number != 0)
             {
                 int cellX = gridStartX + col * cell_size;
                 int cellY = gridStartY + row * cell_size;
@@ -313,11 +314,7 @@ void Game::drawNumbers()
 
                 Color textColor = isLocked[row][col] ? BLACK : !isCorrect[row][col] ? RED : GREEN;
 
-                DrawText(
-                    text.c_str(),
-                    textX, textY,
-                    fontSize, textColor
-                );
+                DrawText(text.c_str(), textX, textY, fontSize, textColor);
             }
         }
     }

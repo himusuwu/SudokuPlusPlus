@@ -1,17 +1,17 @@
 #ifndef SUDOKU_SOLVER
 #define SUDOKU_SOLVER
 
-#include <vector>
 #include <cstddef>
+#include <vector>
 
 class Solver
 {
-public:
+  public:
     [[nodiscard]] std::vector<std::vector<int>> sudoku_solver(std::vector<std::vector<int>>& tmp_sudoku_table);
 
     [[nodiscard]] bool check_unique(std::vector<std::vector<int>> tmp_sudoku_table);
 
-private:
+  private:
     [[nodiscard]] bool is_valid(std::vector<std::vector<int>>& board, size_t row, size_t col, int possible_digit);
 
     bool solve(std::vector<std::vector<int>>& tmp_sudoku_table);

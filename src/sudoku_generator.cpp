@@ -1,16 +1,16 @@
 #include "sudoku_generator.hpp"
-#include "sudoku_solver.hpp"
-#include "Config.hpp"
+
 #include "random_gen.hpp"
+#include "sudoku_solver.hpp"
 
 std::vector<Generate::FieldList> Generate::field_list(std::vector<std::vector<int>>& sudoku_table)
 {
     std::vector<Generate::FieldList> fields;
     fields.reserve(sudoku_table.size() * sudoku_table[0].size());
 
-    for(size_t row = 0; row < sudoku_table.size(); row++)
+    for (size_t row = 0; row < sudoku_table.size(); row++)
     {
-        for(size_t col = 0; col < sudoku_table[row].size(); col++)
+        for (size_t col = 0; col < sudoku_table[row].size(); col++)
         {
             fields.push_back({row, col});
         }
@@ -25,7 +25,7 @@ std::vector<Generate::FieldList> Generate::field_list(std::vector<std::vector<in
 
 DifficultyLevel Generate::selectedLevel(size_t difficulty)
 {
-    switch(difficulty)
+    switch (difficulty)
     {
         case 1:
             return DifficultyLevel::EASY;
@@ -44,35 +44,36 @@ DifficultyLevel Generate::selectedLevel(size_t difficulty)
     }
 }
 
-[[nodiscard]] std::vector<std::vector<int>> Generate::sudoku_generator(std::vector<std::vector<int>>& sudoku_table, size_t difficulty)
+[[nodiscard]] std::vector<std::vector<int>>
+Generate::sudoku_generator(std::vector<std::vector<int>>& sudoku_table, size_t difficulty)
 {
     fields = Generate::field_list(sudoku_table);
-    
+
     tmp_sudoku_table = sudoku_table;
 
     const DifficultyProfile& config = Generate::difficultyMap.at(selectedLevel(difficulty));
 
     attemptsLeft = config.solverAttempts;
 
-    for(const auto& field : fields)
+    for (const auto& field : fields)
     {
-        if(empty_fields >= config.maxEmpty || attemptsLeft == 0)
+        if (empty_fields >= config.maxEmpty || attemptsLeft == 0)
         {
             break;
         }
 
-        if(tmp_sudoku_table[field.row][field.col] == 0)
+        if (tmp_sudoku_table[field.row][field.col] == 0)
         {
             continue;
         }
 
         backup = tmp_sudoku_table[field.row][field.col];
 
-        if(config.symmetric)
+        if (config.symmetric)
         {
             tmp_sudoku_table[field.row][field.col] = 0;
 
-            if(!(field.row == 4 && field.col == 4))
+            if (!(field.row == 4 && field.col == 4))
             {
                 backup_sym = tmp_sudoku_table[8 - field.row][8 - field.col];
                 tmp_sudoku_table[8 - field.row][8 - field.col] = 0;
@@ -85,9 +86,9 @@ DifficultyLevel Generate::selectedLevel(size_t difficulty)
 
         Solver solver;
 
-        if(solver.check_unique(tmp_sudoku_table))
+        if (solver.check_unique(tmp_sudoku_table))
         {
-            if(config.symmetric && !(field.row == 4 && field.col == 4))
+            if (config.symmetric && !(field.row == 4 && field.col == 4))
             {
                 empty_fields += 2;
             }
@@ -100,7 +101,7 @@ DifficultyLevel Generate::selectedLevel(size_t difficulty)
         {
             tmp_sudoku_table[field.row][field.col] = backup;
 
-            if(config.symmetric && !(field.row == 4 && field.col == 4))
+            if (config.symmetric && !(field.row == 4 && field.col == 4))
             {
                 tmp_sudoku_table[8 - field.row][8 - field.col] = backup_sym;
             }

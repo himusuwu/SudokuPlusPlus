@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
-project(SudokuSolver)
+project(SudokuPlusPlus)
 
 set(CMAKE_CXX_STANDARD 20)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Raylib
 include(FetchContent)
@@ -16,11 +18,11 @@ set(SOURCE_FILES src/main.cpp src/shuffle_board.cpp src/sudoku_grid.cpp src/sudo
 
 include_directories(include)
 
-add_executable(SudokuSolver ${SOURCE_FILES})
+add_executable(SudokuPlusPlus ${SOURCE_FILES})
 
-target_link_libraries(SudokuSolver raylib)
+target_link_libraries(SudokuPlusPlus raylib)
 
 add_custom_target(run
-    COMMAND ./SudokuSolver
-    DEPENDS SudokuSolver
+    COMMAND ./SudokuPlusPlus
+    DEPENDS SudokuPlusPlus
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})

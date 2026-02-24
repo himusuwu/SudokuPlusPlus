@@ -5,10 +5,10 @@
 
 class Grid
 {
-public:
+  public:
     std::vector<std::vector<int>> sudoku_grid();
 
-private:
+  private:
     std::vector<std::vector<int>> sudoku_table;
 };
 

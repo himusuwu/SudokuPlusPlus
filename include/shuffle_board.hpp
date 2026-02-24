@@ -1,16 +1,14 @@
 #ifndef SHUFFLE_BOARD
 #define SHUFFLE_BOARD
 
-#include <chrono>
-#include <algorithm>
 #include <vector>
 
 class Shuffler
 {
-public:
+  public:
     std::vector<std::vector<int>> shuffle_board(std::vector<std::vector<int>>& sudoku_table);
 
-private:
+  private:
     size_t random_1;
     size_t random_2;
 

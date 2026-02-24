@@ -1,11 +1,6 @@
-#include <iostream>
+#include "gui/game.hpp"
 
 #include <raylib.h>
-
-#include "shuffle_board.hpp"
-#include "sudoku_grid.hpp"
-#include "sudoku_generator.hpp"
-#include "gui/game.hpp"
 
 int main()
 {
@@ -15,7 +10,7 @@ int main()
     Game game(screenWidth, screenHeight);
     game.run();
 
-    //Tests
+    // Tests
 
     return 0;
 }

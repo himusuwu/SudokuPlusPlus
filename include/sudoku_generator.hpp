@@ -1,28 +1,26 @@
 #ifndef SUDOKU_GENERATOR
 #define SUDOKU_GENERATOR
 
-#include <vector>
+#include "Config.hpp"
+
 #include <cstdlib>
 #include <ctime>
-#include <random>
 #include <map>
-#include <chrono>
-#include <algorithm>
-
-#include "Config.hpp"
+#include <vector>
 
 class Generate
 {
-public:
+  public:
     std::vector<std::vector<int>> sudoku_generator(std::vector<std::vector<int>>& sudoku_table, size_t difficulty);
 
-private:
+  private:
     struct FieldList
     {
         size_t row;
         size_t col;
     };
 
+    // clang-format off
     inline static const std::map<DifficultyLevel, DifficultyProfile> difficultyMap =
     {
         // { KEY,                  { MIN, MAX, SYMMETRY, ATTEMTS }}
@@ -31,6 +29,7 @@ private:
         { DifficultyLevel::HARD,    { 52,  56,  true,   500 } },
         { DifficultyLevel::EXPERT,  { 57,  64,  false,  2000 } }
     };
+    // clang-format on
 
     std::vector<FieldList> field_list(std::vector<std::vector<int>>& sudoku_table);
 

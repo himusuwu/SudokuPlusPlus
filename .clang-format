@@ -1,0 +1,107 @@
+BasedOnStyle: LLVM
+Language: Cpp
+Standard: c++20
+
+# ── Indentation ──────────────────────────────────────────────
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+IndentCaseLabels: true
+IndentPPDirectives: BeforeHash
+NamespaceIndentation: All
+LambdaBodyIndentation: Signature
+
+# ── Column & wrapping ───────────────────────────────────────
+ColumnLimit: 120
+
+# ── Braces ───────────────────────────────────────────────────
+BreakBeforeBraces: Allman
+InsertBraces: true
+
+# ── Arguments / parameters – "block indent" style ───────────
+#   foo(
+#       arg1, arg2,
+#       arg3
+#   );
+AlignAfterOpenBracket: BlockIndent
+BinPackArguments: false
+BinPackParameters: false
+
+# ── Alignment ────────────────────────────────────────────────
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Left
+AlignOperands: AlignAfterOperator
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 1
+
+# ── Short‑form control ──────────────────────────────────────
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: false
+
+# ── Breaking ─────────────────────────────────────────────────
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: AfterColon
+BreakInheritanceList: AfterColon
+BreakStringLiterals: true
+
+# ── Constructor initializers ─────────────────────────────────
+PackConstructorInitializers: NextLine
+ConstructorInitializerIndentWidth: 4
+
+# ── Spaces ───────────────────────────────────────────────────
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: true
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: false
+SpacesInAngles: Never
+SpacesInContainerLiterals: false
+SpacesInParens: Never
+SpacesInSquareBrackets: false
+
+# ── Pointer / Reference ─────────────────────────────────────
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+
+# ── Includes ─────────────────────────────────────────────────
+SortIncludes: CaseInsensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Project headers (quoted)
+  - Regex:    '^"'
+    Priority: 1
+  # System / third-party headers (angled)
+  - Regex:    '^<'
+    Priority: 2
+
+# ── Empty lines ──────────────────────────────────────────────
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: Always
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+SeparateDefinitionBlocks: Always
+
+# ── Misc ─────────────────────────────────────────────────────
+Cpp11BracedListStyle: true
+FixNamespaceComments: true
+CompactNamespaces: false
+ReflowComments: true
+QualifierAlignment: Left
+InsertNewlineAtEOF: true

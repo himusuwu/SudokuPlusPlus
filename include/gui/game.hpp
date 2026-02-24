@@ -1,23 +1,20 @@
 #ifndef GAME
 #define GAME
 
+#include "shuffle_board.hpp"
+
 #include <raylib.h>
 #include <vector>
 
-#include "shuffle_board.hpp"
-#include "sudoku_grid.hpp"
-#include "sudoku_generator.hpp"
-#include "sudoku_solver.hpp"
-
 class Game
 {
-public:
+  public:
     Game(int width, int height);
     ~Game();
 
     void run();
 
-private:
+  private:
     void newGame(size_t difficulty);
     void draw();
     void drawGrid();
@@ -39,7 +36,7 @@ private:
     const float fontSize = 40;
     const float spacing = 1;
     const int grid_size = 9;
-    
+
     std::vector<std::vector<int>> sudoku_table;
 
     std::vector<std::vector<int>> solved_table;
