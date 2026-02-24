@@ -54,7 +54,8 @@ private:
 
     int infoStartX;
     int infoStartY;
-    int infoSpacing;
+
+    std::chrono::steady_clock::time_point startTime{};
 
     Shuffler shuffler;
 };

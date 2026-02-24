@@ -16,7 +16,7 @@ Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
     infoStartX = gridStartX;
     infoStartY = gridStartY - 55;
 
-    infoSpacing = (gridStartX + 9 * cell_size) / 4;
+    startTime = std::chrono::steady_clock::now();
 }
 
 Game::~Game()
@@ -138,16 +138,53 @@ void Game::drawInfo()
     };
 
     auto now = std::chrono::system_clock::now();
-
     auto days = std::chrono::floor<std::chrono::days>(now);
-
     std::chrono::year_month_day ymd{days};
 
     const char* month = months[unsigned(ymd.month()) - 1];
 
-    date = std::string("Date:") + "\n" + std::to_string(unsigned(ymd.day())) + " " + month;
+    date = std::to_string(unsigned(ymd.day())) + " " + month;
 
-    DrawText(date.c_str(), infoStartX, infoStartY, 25, BLACK);
+    std::string s_score = std::to_string(score);
+
+    errors = 0;
+    std::string s_errors = std::to_string(errors) + "/3";
+
+    auto currentTime = std::chrono::steady_clock::now();
+    auto elapsed = currentTime - startTime;
+    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(elapsed).count();
+
+    int minutes = seconds / 60;
+    int remainingSeconds = seconds % 60;
+
+    std::string s_time = (minutes < 10 ? "0" : "") + std::to_string(minutes) + ":" + (remainingSeconds < 10 ? "0" : "") + std::to_string(remainingSeconds);
+
+    const int font = 25;
+    const int lineGap = 4;
+    const int columns = 4;
+    const float columntWidth = static_cast<float>(gridWidth) / columns;
+
+    auto drawBlock = [&](int col, const std::string& line1, const std::string& line2)
+    {
+        float x0 = static_cast<float>(gridStartX) + col * columntWidth;
+
+        int w1 = MeasureText(line1.c_str(), font);
+        int w2 = MeasureText(line2.c_str(), font);
+
+        int x1 = static_cast<int>(x0 + (columntWidth - w1) * 0.5f);
+        int x2 = static_cast<int>(x0 + (columntWidth - w2) * 0.5f);
+
+        int y1 = infoStartY;
+        int y2 = infoStartY + font + lineGap;
+
+        DrawText(line1.c_str(), x1, y1, font, BLACK);
+        DrawText(line2.c_str(), x2, y2, font, BLACK);
+    };
+
+    drawBlock(0, "Date:", date);
+    drawBlock(1, "Score:", s_score);
+    drawBlock(2, "Errors:", s_errors);
+    drawBlock(3, "Time:", s_time);
 }
 
 void Game::drawGrid()
