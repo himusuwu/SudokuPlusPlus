@@ -21,6 +21,8 @@ private:
     void draw();
     void drawGrid();
     void drawNumbers();
+    void drawSelection();
+    void update();
 
     int screenWidth;
     int screenHeight;
@@ -34,6 +36,14 @@ private:
     const int grid_size = 9;
     
     std::vector<std::vector<int>> sudoku_table;
+
+    std::vector<std::vector<bool>> isLocked;
+
+    Vector2 mousePos;
+    bool cellSelected;
+    size_t selectedRow;
+    size_t selectedCol;
+    size_t keyboardNum;
 
     Shuffler shuffler;
 };
