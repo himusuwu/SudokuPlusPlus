@@ -13,7 +13,6 @@ Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
     gridStartX = (screenWidth - gridWidth) / 2;
     gridStartY = ((screenHeight - screenWidth) / 2) - 100;
 
-    infoStartX = gridStartX;
     infoStartY = gridStartY - 55;
 
     startTime = std::chrono::steady_clock::now();
@@ -55,7 +54,7 @@ void Game::update()
             tmpRow >= 0 && tmpRow <= 8 &&
             tmpCol >= 0 && tmpCol <= 8)
         {
-            if(!isLocked[tmpRow][tmpCol])
+            if(!isLocked[tmpRow][tmpCol] && !isCorrect[tmpRow][tmpCol])
             {
                 selectedRow = tmpRow;
                 selectedCol = tmpCol;
@@ -70,15 +69,62 @@ void Game::update()
 
     if(selectedRow != -1 && selectedCol != -1)
     {
-        int pressedKey = GetKeyPressed();
+        numberCheck();
+    }
+}
 
-        if(pressedKey >= KEY_ONE && pressedKey <= KEY_NINE)
+void Game::numberCheck()
+{
+    int pressedKey = GetKeyPressed();
+
+    if(pressedKey >= KEY_ONE && pressedKey <= KEY_NINE)
+    {
+        if(solved_table[selectedRow][selectedCol] == pressedKey - KEY_ONE + 1)
         {
+            score += 100;
+            isError[selectedRow][selectedCol] = false;
+
+            sudoku_table[selectedRow][selectedCol] = pressedKey - KEY_ONE + 1;
+
+            isCorrect[selectedRow][selectedCol] = true;
+
+            selectedRow = -1;
+            selectedCol = -1;
+        }
+        else
+        {
+            errors++;
+
+            isError[selectedRow][selectedCol] = true;
+
             sudoku_table[selectedRow][selectedCol] = pressedKey - KEY_ONE + 1;
         }
-        else if(pressedKey == KEY_BACKSPACE || pressedKey == KEY_DELETE || pressedKey == KEY_ZERO)
+    }
+    else if(pressedKey == KEY_BACKSPACE || pressedKey == KEY_DELETE || pressedKey == KEY_ZERO)
+    {
+        isError[selectedRow][selectedCol] = false;
+
+        sudoku_table[selectedRow][selectedCol] = 0;
+    }
+}
+
+void Game::drawError()
+{
+    for(size_t row = 0; row < isError.size(); row++)
+    {
+        for(size_t col = 0; col < isError[row].size(); col++)
         {
-            sudoku_table[selectedRow][selectedCol] = 0;
+            if(isError[row][col])
+            {
+                float x = gridStartX + col * cell_size;
+                float y = gridStartY + row * cell_size;
+
+                DrawRectangle(
+                    static_cast<int>(x), static_cast<int>(y),
+                    static_cast<int>(cell_size), static_cast<int>(cell_size),
+                    Color{255, 80, 80, 120}
+                );
+            }
         }
     }
 }
@@ -91,11 +137,17 @@ void Game::newGame(size_t difficulty)
 
     shuffler.shuffle_board(sudoku_table);
 
+    solved_table = sudoku_table;
+
     Generate generate;
 
     sudoku_table = generate.sudoku_generator(sudoku_table, difficulty);
 
     isLocked = std::vector<std::vector<bool>>(sudoku_table.size(), std::vector<bool>(sudoku_table[0].size()));
+
+    isCorrect = std::vector<std::vector<bool>>(sudoku_table.size(), std::vector<bool>(sudoku_table[0].size()));
+
+    isError = std::vector<std::vector<bool>>(sudoku_table.size(), std::vector<bool>(sudoku_table[0].size()));
 
     for(size_t row = 0; row < sudoku_table.size(); row++)
     {
@@ -122,11 +174,20 @@ void Game::draw()
 
     drawGrid();
 
+    drawError();
+
     drawNumbers();
 
     drawInfo();
 
+    drawButtons();
+
     EndDrawing();
+}
+
+void Game::drawButtons()
+{
+
 }
 
 void Game::drawInfo()
@@ -147,7 +208,6 @@ void Game::drawInfo()
 
     std::string s_score = std::to_string(score);
 
-    errors = 0;
     std::string s_errors = std::to_string(errors) + "/3";
 
     auto currentTime = std::chrono::steady_clock::now();
@@ -251,7 +311,7 @@ void Game::drawNumbers()
                 float textX = centerX - textSize.x / 2;
                 float textY = centerY - textSize.y / 2;
 
-                Color textColor = isLocked[row][col] ? BLACK : BLUE;
+                Color textColor = isLocked[row][col] ? BLACK : !isCorrect[row][col] ? RED : GREEN;
 
                 DrawText(
                     text.c_str(),

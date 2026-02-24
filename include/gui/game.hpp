@@ -7,6 +7,7 @@
 #include "shuffle_board.hpp"
 #include "sudoku_grid.hpp"
 #include "sudoku_generator.hpp"
+#include "sudoku_solver.hpp"
 
 class Game
 {
@@ -24,6 +25,9 @@ private:
     void drawSelection();
     void update();
     void drawInfo();
+    void drawButtons();
+    void numberCheck();
+    void drawError();
 
     int screenWidth;
     int screenHeight;
@@ -38,7 +42,11 @@ private:
     
     std::vector<std::vector<int>> sudoku_table;
 
+    std::vector<std::vector<int>> solved_table;
+
     std::vector<std::vector<bool>> isLocked;
+    std::vector<std::vector<bool>> isCorrect;
+    std::vector<std::vector<bool>> isError;
 
     Vector2 mousePos;
     bool cellSelected;
@@ -48,8 +56,8 @@ private:
 
     // Draw info
     std::string date;
-    int score;
-    size_t errors;
+    int score{};
+    size_t errors{};
     int time;
 
     int infoStartX;
