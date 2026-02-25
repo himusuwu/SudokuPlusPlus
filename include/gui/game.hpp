@@ -23,8 +23,13 @@ class Game
     void update();
     void drawInfo();
     void drawButtons();
+    void drawNumPad();
     void numberCheck();
     void drawError();
+
+    bool isSudokuSolved();
+    bool isFinished;
+    bool stopClock;
 
     int screenWidth;
     int screenHeight;
@@ -61,6 +66,7 @@ class Game
     int infoStartY;
 
     std::chrono::steady_clock::time_point startTime{};
+    std::chrono::steady_clock::time_point endTime{};
 
     Shuffler shuffler;
 };

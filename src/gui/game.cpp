@@ -35,7 +35,19 @@ void Game::run()
 
     while (!WindowShouldClose())
     {
-        update();
+        if (!isFinished)
+        {
+            stopClock = false;
+            update();
+        }
+        else
+        {
+            if (!stopClock)
+            {
+                endTime = std::chrono::steady_clock::now();
+                stopClock = true;
+            }
+        }
 
         draw();
     }
@@ -71,6 +83,15 @@ void Game::update()
     if (selectedRow != -1 && selectedCol != -1)
     {
         numberCheck();
+
+        if (isSudokuSolved())
+        {
+            isFinished = true;
+        }
+        else
+        {
+            isFinished = false;
+        }
     }
 }
 
@@ -107,6 +128,16 @@ void Game::numberCheck()
 
         sudoku_table[selectedRow][selectedCol] = 0;
     }
+}
+
+bool Game::isSudokuSolved()
+{
+    if (sudoku_table == solved_table)
+    {
+        return true;
+    }
+
+    return false;
 }
 
 void Game::drawError()
@@ -185,10 +216,14 @@ void Game::draw()
 
     drawButtons();
 
+    drawNumPad();
+
     EndDrawing();
 }
 
 void Game::drawButtons() {}
+
+void Game::drawNumPad() {}
 
 void Game::drawInfo()
 {
@@ -208,7 +243,18 @@ void Game::drawInfo()
 
     auto currentTime = std::chrono::steady_clock::now();
     auto elapsed = currentTime - startTime;
-    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(elapsed).count();
+    long long seconds;
+
+    if (isFinished)
+    {
+        elapsed = endTime - startTime;
+        seconds = std::chrono::duration_cast<std::chrono::seconds>(elapsed).count();
+    }
+    else
+    {
+        elapsed = currentTime - startTime;
+        seconds = std::chrono::duration_cast<std::chrono::seconds>(elapsed).count();
+    }
 
     int minutes = seconds / 60;
     int remainingSeconds = seconds % 60;
@@ -221,7 +267,7 @@ void Game::drawInfo()
     const int columns = 4;
     const float columntWidth = static_cast<float>(gridWidth) / columns;
 
-    auto drawBlock = [&](int col, const std::string& line1, const std::string& line2)
+    auto drawBlock = [&](int col, const std::string& line1, const std::string& line2) -> void
     {
         float x0 = static_cast<float>(gridStartX) + col * columntWidth;
 
