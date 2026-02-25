@@ -1,9 +1,11 @@
 #include "gui/game.hpp"
 
+#include "raylib.h"
 #include "sudoku_generator.hpp"
 #include "sudoku_grid.hpp"
 
 #include <chrono>
+#include <string>
 
 Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
 {
@@ -221,9 +223,35 @@ void Game::draw()
     EndDrawing();
 }
 
-void Game::drawButtons() {}
+void Game::drawButtons()
+{
+    // Undo Notes Hints Erase
+}
 
-void Game::drawNumPad() {}
+void Game::drawNumPad()
+{
+    // Numbers from 1-9
+    int count = 9;
+
+    int numberWidth = MeasureText("9", screenWidth / 15);
+
+    float slotWidth = static_cast<float>(screenWidth) / count;
+
+    int y = screenHeight - fontSize - 20;
+
+    for (size_t num = 0; num < count; num++)
+    {
+        const char* text = TextFormat("%d", num + 1);
+
+        int textWidth = MeasureText(text, fontSize);
+
+        float slotCenter = slotWidth * num + slotWidth / 2;
+
+        float x = slotCenter - static_cast<float>(textWidth) / 2;
+
+        DrawText(TextFormat("%d", num + 1), x, y, fontSize, BLACK);
+    }
+}
 
 void Game::drawInfo()
 {
