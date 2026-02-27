@@ -12,8 +12,7 @@ A desktop Sudoku game built from scratch in **C++20** with a graphical interface
 
 ## Screenshot
 
-<!-- Zamień poniższy placeholder na prawdziwy screenshot lub GIF z gry -->
-> **TODO:** Dodaj zrzut ekranu lub GIF pokazujący działającą grę.
+> **TODO:** 
 >
 > ```
 > ![Gameplay](docs/screenshot.png)
@@ -23,18 +22,18 @@ A desktop Sudoku game built from scratch in **C++20** with a graphical interface
 
 ## Table of Contents
 
-- [About the Project](#-about-the-project)
-- [Features](#-features)
-- [Built With](#-built-with)
-- [Getting Started](#-getting-started)
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Running](#running)
-- [Project Structure](#-project-structure)
-- [How It Works](#-how-it-works)
-- [Roadmap](#-roadmap)
-- [License](#-license)
-- [Contact](#-contact)
+- [Project Structure](#project-structure)
+- [How It Works](#how-it-works)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Contact](#contact)
 
 ---
 
@@ -66,7 +65,7 @@ It's a great exercise in backtracking algorithms, constraint satisfaction, and r
 ## Built With
 
 | Technology | Purpose |
-|---|---|
+| --- | --- |
 | **C++20** | Core language |
 | **Raylib 5.5** | 2D graphics & input handling |
 | **CMake 3.16+** | Build system |
@@ -82,6 +81,7 @@ It's a great exercise in backtracking algorithms, constraint satisfaction, and r
 - CMake **3.16** or newer
 - Git
 - On Linux you may need additional packages for Raylib:
+
   ```bash
   # Debian / Ubuntu
   sudo apt install libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev
@@ -116,7 +116,7 @@ make run
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 SudokuSolver/
@@ -144,7 +144,7 @@ SudokuSolver/
 
 ---
 
-## ⚙ How It Works
+## How It Works
 
 ```
 Grid → Shuffle → Generate (remove cells) → Solve (verify uniqueness) → GUI
@@ -158,7 +158,7 @@ Grid → Shuffle → Generate (remove cells) → Solve (verify uniqueness) → G
 
 ---
 
-## 🗺 Roadmap
+## Roadmap
 
 - [x] Base Sudoku grid generation
 - [x] Board shuffling (rows, columns, bands)
@@ -187,8 +187,6 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 ## Contact
 
-<!-- Uzupełnij swoje dane kontaktowe -->
 **Himus** — [GitHub Profile](https://github.com/himusuwu)
 
 Project Link: [https://github.com/himusuwu/SudokuPlusPlus](https://github.com/himusuwu/SudokuPlusPlus)
-

@@ -3,7 +3,9 @@
 
 #include "shuffle_board.hpp"
 
+#include <array>
 #include <raylib.h>
+#include <string>
 #include <vector>
 
 class Game
@@ -26,6 +28,11 @@ class Game
     void drawNumPad();
     void numberCheck();
     void drawError();
+    void initButtons();
+    void handleButtonsClick(Vector2 mouse);
+
+    std::array<Rectangle, 4> actionButtons{};
+    std::array<std::string, 4> actionLabels{"Undo", "Notes", "Hints", "Erase"};
 
     bool isSudokuSolved();
     bool isFinished;

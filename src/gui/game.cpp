@@ -4,6 +4,7 @@
 #include "sudoku_generator.hpp"
 #include "sudoku_grid.hpp"
 
+#include <algorithm>
 #include <chrono>
 #include <string>
 
@@ -19,6 +20,8 @@ Game::Game(int width, int height) : screenWidth(width), screenHeight(height)
     gridStartY = ((screenHeight - screenWidth) / 2) - 100;
 
     infoStartY = gridStartY - 55;
+
+    initButtons();
 
     startTime = std::chrono::steady_clock::now();
 }
@@ -60,6 +63,7 @@ void Game::update()
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         mousePos = GetMousePosition();
+        handleButtonsClick(mousePos);
 
         int relativeX = static_cast<int>(mousePos.x - gridStartX);
         int relativeY = static_cast<int>(mousePos.y - gridStartY);
@@ -226,6 +230,88 @@ void Game::draw()
 void Game::drawButtons()
 {
     // Undo Notes Hints Erase
+    Vector2 mouse = GetMousePosition();
+
+    for (int i = 0; i < 4; i++)
+    {
+        bool hovered = CheckCollisionPointRec(mouse, actionButtons[i]);
+        bool pressed = hovered && IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+
+        Color bgColor;
+        if (pressed)
+        {
+            bgColor = Color{180, 180, 180, 255};
+        }
+        else if (hovered)
+        {
+            bgColor = Color{210, 210, 210, 255};
+        }
+        else
+        {
+            bgColor = LIGHTGRAY;
+        }
+
+        Rectangle drawRect = actionButtons[i];
+        if (pressed)
+        {
+            drawRect.y += 2.0f;
+        }
+
+        DrawRectangleRounded(drawRect, 0.25f, 8, bgColor);
+
+        if (hovered)
+        {
+            DrawRectangleRoundedLinesEx(drawRect, 0.25f, 8, 2.0f, DARKGRAY);
+        }
+
+        int tw = MeasureText(actionLabels[i].c_str(), 20);
+        int tx = static_cast<int>(drawRect.x + (drawRect.width - tw) * 0.5f);
+        int ty = static_cast<int>(drawRect.y + (drawRect.height - 20) * 0.5f);
+
+        DrawText(actionLabels[i].c_str(), tx, ty, 20, BLACK);
+    }
+}
+
+void Game::initButtons()
+{
+    const int count = 4;
+
+    const float gap = std::max(10.0f, screenWidth * 0.015f);
+
+    const float top = static_cast<float>(gridStartY + gridWidth) + 12.0f;
+    const float numPadTop = static_cast<float>(screenHeight) - fontSize - 20.0f;
+    const float bottom = numPadTop - 12.0f;
+    const float availableH = std::max(0.0f, bottom - top);
+
+    const float btnH = std::clamp(availableH * 0.75f, 34.0f, 56.0f);
+    const float y = top + (availableH - btnH) * 0.5f;
+
+    const float btnW = (static_cast<float>(screenWidth) - gap * (count + 1)) / count;
+
+    for (int i = 0; i < count; i++)
+    {
+        const float x = gap + i * (btnW + gap);
+        actionButtons[i] = Rectangle{x, y, btnW, btnH};
+    }
+}
+
+void Game::handleButtonsClick(Vector2 mouse)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (CheckCollisionPointRec(mouse, actionButtons[i]))
+        {
+            switch (i)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+            }
+
+            return;
+        }
+    }
 }
 
 void Game::drawNumPad()
