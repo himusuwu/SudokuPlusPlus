@@ -3,7 +3,7 @@
 ![C++](https://img.shields.io/badge/C%2B%2B-20-blue?logo=cplusplus)
 ![Raylib](https://img.shields.io/badge/Raylib-5.5-green?logo=raylib)
 ![CMake](https://img.shields.io/badge/CMake-3.16+-orange?logo=cmake)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-yellow)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-red)
 
 A desktop Sudoku game built from scratch in **C++20** with a graphical interface powered by **Raylib**. Generates solvable, unique Sudoku puzzles with four difficulty levels — from easy to expert.
@@ -181,7 +181,12 @@ Grid → Shuffle → Generate (remove cells) → Solve (verify uniqueness) → G
 
 ## License
 
-Distributed under the **MIT License**. See `LICENSE` for more information.
+Distributed under the **CC BY-NC 4.0** (Creative Commons Attribution-NonCommercial 4.0 International) license.
+
+- You **must** give credit to the original author when using or sharing this code.
+- You **may not** use this project for commercial purposes.
+
+See [LICENSE](LICENSE) for full details.
 
 ---
 
